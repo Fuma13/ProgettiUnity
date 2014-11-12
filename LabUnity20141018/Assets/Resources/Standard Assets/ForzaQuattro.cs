@@ -9,16 +9,9 @@ public class ForzaQuattro : MonoBehaviour {
     private const int Max_Punti = 4;
     private const int Max_Celle = Max_Righe * Max_Colonne;
 
-    //Usato
     GameObject[] oggetto_click = new GameObject[Max_Colonne]; //Barre verticali trasparenti x prendere il click  
-    //Usato
     GameObject[] struttura = new GameObject[Max_Colonne]; //Barre verticale con celle
-	//GameObject[] dischetto = new GameObject[Max_Celle]; //oggetto del dischetto inserito in ordine
 
-    //int[] dischetto_fermo = new int[Max_Celle]; //indica se il dischetto è fermo o si muove (nello stesso ordine di dischetto)
-    //int[] dischetto_tipo = new int[Max_Celle]; //i tipi di dischetti inseriti (nello stesso ordine di dischetto)
-    //int[] dischetto_colonna = new int[Max_Celle];//colonna dei dischetti inseriti (nello stesso ordine di dischetto)
-    //Usato
     int[] dischetto_cella = new int[Max_Celle]; //matrice della griglia
 
     //float[] dischetto_x = new float[Max_Celle]; //X dei dischetti inseriti (nello stesso ordine di dischetto)

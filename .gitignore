@@ -222,3 +222,6 @@ Assets/UnityVS/
 LabUnity20141018/Assets/UnityVS/
 LabUnity20141018/Assets/UnityVS/*
 *.unityproj
+
+# include meta files
+!*.*.meta

@@ -225,3 +225,5 @@ LabUnity20141018/Assets/UnityVS/*
 
 # include meta files
 !*.*.meta
+LabUnity20141122/__MACOSX/
+LabUnity20141122/Assets/UnityVS/

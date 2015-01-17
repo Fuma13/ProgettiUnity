@@ -2,7 +2,7 @@
 
 private var personaggio: GameObject;
 private var personaggio_animazione: int; //1 idle, 2 run, 3 jump air, 4 jump land
-public var personaggio_velo: float;
+private var personaggio_velo: float;
 private var personaggio_alt:float;
 private var personaggio_pos: float[];
 private var personaggio_salto_ang: float;
@@ -24,7 +24,7 @@ function Update () {
 		//La velocità non cresce all'infinito xkè ogni cicolo riduco
 		personaggio_velo *= .8;
 		//Faccio riusltare 0 il calcolo del personaggio_alt fatto sopra (inutile xkè azzero dopo)
-		personaggio_salto_ang = 90*Mathf.Deg2Rad;
+		personaggio_salto_ang = 1.570796325;//90*Mathf.Deg2Rad;
 		//Lo posiziono a 0
 		personaggio_alt = 0;
 	
@@ -40,7 +40,9 @@ function Update () {
 		}
 	}
 	else {
-		personaggio_salto_ang += 0.1;
+		//personaggio_salto_ang += 0.1;
+		//Adatto l'andamento del salto all'animazione
+		personaggio_salto_ang = Mathf.Lerp(0,Mathf.PI,personaggio.animation["Jump"].normalizedTime); //180
 	}
 	
 	if(personaggio_animazione < 3 && Input.GetKeyDown(KeyCode.Space)){
@@ -64,26 +66,26 @@ function Update () {
 	//Passaggio animazioni
 	if(personaggio_alt < .05){
 		
-		if(personaggio_animazione != 4)
+		//if(personaggio_animazione != 4)
 		{
 			if(personaggio_velo < .1){
-				//Idle();
+				Idle();
 			}
 			else{
 				Run();
 			}
 		}
-		else{
-			JumpLand();
-		}
+//		else{
+//			JumpLand();
+//		}
 	}
 	else{
-		if(personaggio_alt > .3){
+//		if(personaggio_alt > .3){
 			Jump();
-		}
-		else{
-			JumpLand();
-		}
+//		}
+//		else{
+//			//JumpLand();
+//		}
 	}
 }
 
@@ -101,7 +103,7 @@ function Run(){
 	if(personaggio_animazione != 2){
 		Debug.Log("Run");
 		personaggio_animazione = 2;
-		personaggio.animation.CrossFade("Run",0.55);
+		personaggio.animation.CrossFade("Run",0.2);
 		personaggio.animation.wrapMode = WrapMode.Loop;
 	}
 	personaggio.animation["Run"].speed = personaggio_velo * 1;
@@ -109,26 +111,26 @@ function Run(){
 
 function Jump(){
 	if(personaggio_animazione != 3){
-		Debug.Log("JumpFlying");
+		Debug.Log("Jump");
 		personaggio_animazione = 3;
-		personaggio.animation.CrossFade("JumpFlying", 0.1);
+		personaggio.animation.CrossFade("Jump", 0.1);
 		personaggio.animation.wrapMode = WrapMode.ClampForever;
-		personaggio.animation["JumpFlying"].speed = .9;
+		personaggio.animation["Jump"].speed = .9;
 	}
 }
 
-function JumpLand(){
-	if(personaggio_animazione == 3){
-		Debug.Log("JumpLanding");
-		personaggio_animazione = 4;
-		personaggio.animation.Play("JumpLanding");
-		personaggio.animation.wrapMode = WrapMode.ClampForever;
-		personaggio.animation["JumpLanding"].speed = 1;
-	}
-	else if(personaggio_animazione == 4)
-	{
-		if(personaggio.animation["JumpLanding"].normalizedTime > .9){
-			personaggio_animazione = 0;
-		}
-	}
-}
+//function JumpLand(){
+//	if(personaggio_animazione == 3){
+//		Debug.Log("JumpLanding");
+//		personaggio_animazione = 4;
+//		personaggio.animation.Play("JumpLanding");
+//		personaggio.animation.wrapMode = WrapMode.ClampForever;
+//		personaggio.animation["JumpLanding"].speed = 1;
+//	}
+//	else if(personaggio_animazione == 4)
+//	{
+//		if(personaggio.animation["JumpLanding"].normalizedTime > .9){
+//			personaggio_animazione = 0;
+//		}
+//	}
+//}

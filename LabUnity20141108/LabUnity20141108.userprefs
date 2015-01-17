@@ -2,13 +2,11 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Resources\Standard Assets\AnimationBehaviour.js">
     <Files>
-      <File FileName="Assets\Resources\Standard Assets\AnimationBehaviour.js" Line="67" Column="33" />
+      <File FileName="Assets\Resources\Standard Assets\AnimationBehaviour.js" Line="4" Column="47" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="C:\Users\Developer\Unity\Verona\ProgettiUnity\LabUnity20141108\Assets\Resources\Standard Assets\AnimationBehaviour.js" line="134" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

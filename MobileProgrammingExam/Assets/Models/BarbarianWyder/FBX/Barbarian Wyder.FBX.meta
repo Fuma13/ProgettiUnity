@@ -1,0 +1,149 @@
+fileFormatVersion: 2
+guid: d1b40d272808adf4688adc207aaba2e2
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Barbarian Wyder
+    100004: Rig
+    100006: RigHead
+    100008: RigLArm1
+    100010: RigLArm2
+    100012: RigLArmCollarbone
+    100014: RigLArmFinger1
+    100016: RigLArmFinger2
+    100018: RigLArmPalm
+    100020: RigLArmThumb1
+    100022: RigLArmThumb2
+    100024: RigLLeg1
+    100026: RigLLeg2
+    100028: RigLLegAnkle
+    100030: RigLLegFoot1
+    100032: RigLLegPlatform
+    100034: RigMace
+    100036: RigNeck
+    100038: RigPelvis
+    100040: RigRArm1
+    100042: RigRArm2
+    100044: RigRArmCollarbone
+    100046: RigRArmFinger1
+    100048: RigRArmFinger2
+    100050: RigRArmPalm
+    100052: RigRArmThumb1
+    100054: RigRArmThumb2
+    100056: RigRLeg1
+    100058: RigRLeg2
+    100060: RigRLegAnkle
+    100062: RigRLegFoot1
+    100064: RigRLegPlatform
+    100066: RigShield
+    100068: RigSpine
+    100070: RigSpine1
+    100072: RigSpine2
+    100074: Hammer
+    100076: Shield
+    400000: Barbarian Wyder
+    400002: //RootNode
+    400004: Rig
+    400006: RigHead
+    400008: RigLArm1
+    400010: RigLArm2
+    400012: RigLArmCollarbone
+    400014: RigLArmFinger1
+    400016: RigLArmFinger2
+    400018: RigLArmPalm
+    400020: RigLArmThumb1
+    400022: RigLArmThumb2
+    400024: RigLLeg1
+    400026: RigLLeg2
+    400028: RigLLegAnkle
+    400030: RigLLegFoot1
+    400032: RigLLegPlatform
+    400034: RigMace
+    400036: RigNeck
+    400038: RigPelvis
+    400040: RigRArm1
+    400042: RigRArm2
+    400044: RigRArmCollarbone
+    400046: RigRArmFinger1
+    400048: RigRArmFinger2
+    400050: RigRArmPalm
+    400052: RigRArmThumb1
+    400054: RigRArmThumb2
+    400056: RigRLeg1
+    400058: RigRLeg2
+    400060: RigRLegAnkle
+    400062: RigRLegFoot1
+    400064: RigRLegPlatform
+    400066: RigShield
+    400068: RigSpine
+    400070: RigSpine1
+    400072: RigSpine2
+    400074: Hammer
+    400076: Shield
+    2300000: Barbarian Wyder
+    2300002: Hammer
+    2300004: Shield
+    3300000: Barbarian Wyder
+    3300002: Hammer
+    3300004: Shield
+    4300000: Barbarian Wyder
+    4300002: Hammer
+    4300004: Shield
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: Barbarian Wyder
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .0120000001
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 180
+    splitTangentsAcrossUV: 1
+    normalImportMode: 1
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  additionalBone: 1
+  userData: 

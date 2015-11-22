@@ -8,7 +8,6 @@ public class InputPlayerTouch : InputBase
 	{
 		base.InputUpdate();
 		TouchesUpdate ();
-
 	}
 
 	void TouchesUpdate()
@@ -22,7 +21,7 @@ public class InputPlayerTouch : InputBase
 			currentOldTouch = (TouchInfo)m_aTouches [i];
 			Debug.Log("CHECK OLD TOUCH: " + currentOldTouch.m_iID);
 			if (currentOldTouch.m_iID != -1) {
-				for (int touchesIndex = 0; touchesIndex < touchesCount; ++touchesIndex) {
+				for (int touchesIndex = 0; touchesIndex < touchesCount && !find; ++touchesIndex) {
 					Debug.Log("CHECK TOUCH: ");
 					courrentNewTouch = touches [touchesIndex];
 
@@ -79,7 +78,12 @@ public class InputPlayerTouch : InputBase
 
 	void OnDetailedGestureDone(float deltaAngle, bool right, float distance, float velocity)
 	{
-		InternalShootDetected (default(Vector3));
+        int iAngleDirection = right ? 1 : -1;
+        Vector2 v2Direction = new Vector2();
+        v2Direction.x = Mathf.Cos(deltaAngle);
+        v2Direction.y = iAngleDirection * Mathf.Sin(deltaAngle);
+        v2Direction *= distance;
+        InternalGestureDetected(v2Direction);
 	}
 
 	void OnGestureDone(Vector2 direction)

@@ -12,27 +12,27 @@ public class InputFactory
 		case InputManager.eInputSource.PLAYER:
 			if(Input.touchSupported)
 			{
-//				oInputImplementation = new InputPlayerTouch();
+				oInputImplementation = new InputPlayerTouch();
 			}
 			else
 			{
-//				oInputImplementation = new InputPlayerTouch();
+				oInputImplementation = new InputPlayerMouse();
 			}
 			break;
 		case InputManager.eInputSource.PLAYER_MOUSE:
-//			oInputImplementation = new InputPlayerMouse();
+			oInputImplementation = new InputPlayerMouse();
 			break;
-		case InputManager.eInputSource.AI:
-			Debug.LogWarning("AI input not yet available - Replay fallback");
-//			oInputImplementation = new InputReplay();
-			break;
-		case InputManager.eInputSource.NETWORK:
-			Debug.LogWarning("AI network not yet available - Replay fallback");
-//			oInputImplementation = new InputReplay();
-			break;
-		case InputManager.eInputSource.REPLAY:
-//			oInputImplementation = new InputReplay();
-			break;
+//        case InputManager.eInputSource.AI:
+//            Debug.LogWarning("AI input not yet available - Replay fallback");
+////			oInputImplementation = new InputReplay();
+//            break;
+//        case InputManager.eInputSource.NETWORK:
+//            Debug.LogWarning("AI network not yet available - Replay fallback");
+////			oInputImplementation = new InputReplay();
+//            break;
+//        case InputManager.eInputSource.REPLAY:
+////			oInputImplementation = new InputReplay();
+//            break;
 		};
 
 		if(oInputImplementation == null)

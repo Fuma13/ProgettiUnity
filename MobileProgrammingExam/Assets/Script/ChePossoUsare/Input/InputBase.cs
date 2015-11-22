@@ -20,22 +20,22 @@ public class InputBase
 		}
 	}
 
-	protected void InternalShootDetected(Vector3 position)
+	protected void InternalShootDetected(Vector3 v3Position)
 	{
 		if(m_actShootCallback != null)
 		{
-			m_actShootCallback(position);
+            m_actShootCallback(v3Position);
 		}
 	}
 
-	protected void InternalGestureDetected(Vector2 direction)
+	protected void InternalGestureDetected(Vector2 v2Direction)
 	{
 		if (m_actGestureCallback != null) {
-			m_actGestureCallback(direction);
+            m_actGestureCallback(v2Direction);
 		}
 	}
 
-	public void Activate(Action actJumpInput, DetailedVec3Callback actShootInput, DetailedVec2Callback actGestureInput)
+    public void Activate(Action actJumpInput, DetailedVec3Callback actShootInput, DetailedVec2Callback actGestureInput)
 	{
 		m_actJumpCallback = actJumpInput;
 		m_actShootCallback = actShootInput;
@@ -50,9 +50,9 @@ public class InputBase
 	}
 
 	//VARS
-	public delegate void DetailedVec3Callback(Vector3 position);
-	public delegate void DetailedVec2Callback(Vector2 direction);
+	public delegate void DetailedVec3Callback(Vector3 v3Position);
+    public delegate void DetailedVec2Callback(Vector2 v2Direction);
 	protected event Action m_actJumpCallback = null;
 	protected event DetailedVec3Callback m_actShootCallback = null;
-	protected event DetailedVec2Callback m_actGestureCallback = null;
+    protected event DetailedVec2Callback m_actGestureCallback = null;
 }

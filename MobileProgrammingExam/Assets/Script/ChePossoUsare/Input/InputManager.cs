@@ -18,10 +18,7 @@ public class InputManager : MonoBehaviour
 	
 	void Update()
 	{
-		if(m_oInput != null)
-		{
-			m_oInput.InputUpdate();
-		}
+        m_oInput.InputUpdate();
 	}
 
 	private void JumpDetecet()
@@ -53,10 +50,9 @@ public class InputManager : MonoBehaviour
 
 	private void GestureDetected(Vector2 direction)
 	{
-		if (OnGesture != null) {
-			if(direction != default(Vector2)){
-				OnGesture(direction);
-			}
+		if (OnGesture != null)
+        {
+			OnGesture(direction);
 		}
 	}
 
@@ -97,9 +93,9 @@ public class InputManager : MonoBehaviour
 	{
 		PLAYER = 0,
 		PLAYER_MOUSE,
-		AI,
-		REPLAY,
-		NETWORK,
+        //AI,
+        //REPLAY,
+        //NETWORK,
 		COUNT
 	}
 	
@@ -107,5 +103,5 @@ public class InputManager : MonoBehaviour
 	[SerializeField] private float			m_fGestureTime = 2.0f;
 
 	private InputBase m_oInput;
-	private GestureIdentifier m_oGestureIdentifier;
+    private GestureIdentifier m_oGestureIdentifier;
 }

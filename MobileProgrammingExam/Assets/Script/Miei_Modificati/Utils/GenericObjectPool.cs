@@ -40,11 +40,18 @@ public class GenericObjectPool
 			int avaiable = 0;
 			//Search the first position avaiable
 			for(; avaiable < m_iMaxSize && m_aCratedObjectFlag[avaiable]; ++avaiable){}
-			m_aCratedObjectFlag[avaiable] = true;
-			//Enable the object
-			m_aObjectArray[avaiable].transform.gameObject.SetActive(true);
-			--m_iNumObjAvaiable;
-			return m_aObjectArray[avaiable];
+            if (!m_aObjectArray[avaiable].activeInHierarchy)
+            {
+                m_aCratedObjectFlag[avaiable] = true;
+                //Enable the object
+                m_aObjectArray[avaiable].transform.gameObject.SetActive(true);
+                --m_iNumObjAvaiable;
+                return m_aObjectArray[avaiable];
+            }
+            else
+            {
+                Debug.LogError("Trying to get an active object");
+            }
 		}
 		return null;
 	}
@@ -56,10 +63,7 @@ public class GenericObjectPool
 		{
 			if (m_aCratedObjectFlag [index] && m_aObjectArray [index].Equals (obj)) 
 			{
-				m_aCratedObjectFlag [index] = false;
-				//Disable the object
-				m_aObjectArray [index].gameObject.SetActive (false);
-				++m_iNumObjAvaiable;
+                ReleaseObjectAtIndex(index);
 			}
 		}
 	}
@@ -70,13 +74,18 @@ public class GenericObjectPool
 		{
 			if (m_aCratedObjectFlag [index]) 
 			{
-				m_aCratedObjectFlag [index] = false;
-				//Disable the object
-				m_aObjectArray [index].gameObject.SetActive (false);
-				++m_iNumObjAvaiable;
+                ReleaseObjectAtIndex(index);
 			}
 		}
 	}
+
+    private void ReleaseObjectAtIndex(int iIndex)
+    {
+        m_aCratedObjectFlag[iIndex] = false;
+        //Disable the object
+        m_aObjectArray[iIndex].gameObject.SetActive(false);
+        ++m_iNumObjAvaiable;
+    }
 	
 	public bool HasFreeObjects
 	{

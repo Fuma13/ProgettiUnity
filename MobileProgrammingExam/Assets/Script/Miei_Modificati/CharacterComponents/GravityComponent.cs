@@ -35,7 +35,6 @@ public class GravityComponent : MonoBehaviour {
 		}
 	}
 	
-	// Update is called once per frame
 	void FixedUpdate () 
 	{
 		GetInput ();
@@ -49,7 +48,7 @@ public class GravityComponent : MonoBehaviour {
 		}
 		if(Input.GetButtonUp("Jump"))
 		{
-			m_oRigidBodyTarget.AddForce(m_tBaseJumpDirection.up * m_fJumpIntencity 
+			m_oRigidBodyTarget.AddForce(Vector3.up * m_fJumpIntencity * m_oRigidBodyTarget.mass
 			                            * m_oJumpIntencityCorrectorCurve.Evaluate(m_fJumpIntencity) 
 			                            * m_fJumpIntencityCorrector, ForceMode.Impulse);
 			m_fJumpIntencity = 0.0f;

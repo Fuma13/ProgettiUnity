@@ -1,38 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InputFactory 
+public class InputFactory : MonoBehaviour
 {
-	public static InputBase GetInput(InputManager.eInputSource eInputType)
+	public InputBase GetInput(InputManager.eInputSource eInputType)
 	{
 		InputBase oInputImplementation = null;
 
 		switch(eInputType)
 		{
-		case InputManager.eInputSource.PLAYER:
-			if(Input.touchSupported)
-			{
-				oInputImplementation = new InputPlayerTouch();
-			}
-			else
-			{
-				oInputImplementation = new InputPlayerMouse();
-			}
+		case InputManager.eInputSource.PLAYER_TOUCH:
+                oInputImplementation = m_oPlayerTouch;
 			break;
 		case InputManager.eInputSource.PLAYER_MOUSE:
-			oInputImplementation = new InputPlayerMouse();
+            oInputImplementation = m_oPlayerMouse;
 			break;
-//        case InputManager.eInputSource.AI:
-//            Debug.LogWarning("AI input not yet available - Replay fallback");
-////			oInputImplementation = new InputReplay();
-//            break;
-//        case InputManager.eInputSource.NETWORK:
-//            Debug.LogWarning("AI network not yet available - Replay fallback");
-////			oInputImplementation = new InputReplay();
-//            break;
-//        case InputManager.eInputSource.REPLAY:
-////			oInputImplementation = new InputReplay();
-//            break;
+        case InputManager.eInputSource.PLAYER_KEYBORAD:
+            oInputImplementation = m_oPlayerKeyboard;
+            break;
 		};
 
 		if(oInputImplementation == null)
@@ -42,4 +27,8 @@ public class InputFactory
 
 		return oInputImplementation;
 	}
+
+    [SerializeField] InputBase m_oPlayerTouch;
+    [SerializeField] InputBase m_oPlayerMouse;
+    [SerializeField] InputBase m_oPlayerKeyboard;
 }

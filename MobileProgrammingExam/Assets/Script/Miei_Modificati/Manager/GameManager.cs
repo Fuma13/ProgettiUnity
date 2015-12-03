@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 	public Action OnMainMenuEvent;
 	public Action OnStartEvent;
 	public Action OnRestartEvent;
+    public Action OnDeadEvent;
 
 	void Start () 
 	{
@@ -16,7 +17,7 @@ public class GameManager : MonoBehaviour
 		OnMainmenu ();
 	}
 
-	public void ChangeState(GameState eNextState)
+	public bool ChangeState(GameState eNextState)
 	{
 		switch (eNextState) 
 		{
@@ -25,38 +26,52 @@ public class GameManager : MonoBehaviour
 			{
 				m_eGameState = GameState.GAME;
 				OnUnpause();
+                return true;
 			}
 			else if(m_eGameState == GameState.MAIN)
 			{
 				m_eGameState = GameState.GAME;
 				OnStart();
-			}
+                return true;
+            }
 			break;
 		case GameState.MAIN:
-			if(m_eGameState == GameState.PAUSE)
+            if (m_eGameState == GameState.PAUSE || m_eGameState == GameState.DEAD)
 			{
 				m_eGameState = GameState.MAIN;
 				OnMainmenu();
-			}
+                return true;
+            }
 			break;
 		case GameState.PAUSE:
 			if(m_eGameState == GameState.GAME)
 			{
 				m_eGameState = GameState.PAUSE;
 				OnPause();
-			}
+                return true;
+            }
 			break;
 		case GameState.RESTART:
-			if(m_eGameState == GameState.PAUSE)
+			if(m_eGameState == GameState.PAUSE || m_eGameState == GameState.DEAD)
 			{
 				m_eGameState = GameState.RESTART;
 				OnRestart();
 				m_eGameState = GameState.GAME;
-			}
+                return true;
+            }
 			break;
+        case GameState.DEAD:
+            if(m_eGameState == GameState.GAME)
+            {
+                m_eGameState = GameState.DEAD;
+                OnDead();
+                return true;
+            }
+            break;
 		default:
-			break;
+            break;
 		}
+        return false;
 	}
 
 	private void OnPause()
@@ -93,13 +108,19 @@ public class GameManager : MonoBehaviour
 
 	private void OnRestart()
 	{
-		Debug.Log ("RESTART");
-		
 		if (OnRestartEvent != null) 
 		{
 			OnRestartEvent();
 		}
 	}
+
+    private void OnDead()
+    {
+        if(OnDeadEvent != null)
+        {
+            OnDeadEvent();
+        }
+    }
 
 
 	private GameState m_eGameState;
@@ -107,8 +128,9 @@ public class GameManager : MonoBehaviour
 	public enum GameState
 	{
 		MAIN = 0,
-		PAUSE = 1,
-		GAME = 2,
-		RESTART = 3
+		PAUSE,
+		GAME,
+		RESTART,
+        DEAD
 	}
 }

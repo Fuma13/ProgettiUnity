@@ -3,8 +3,10 @@ using System.Collections;
 
 public class InputPlayerTouch : InputBase
 {
-
-	public override void InputUpdate()
+    protected override void InternalInitInput()
+    {
+    }
+	protected override void InternalInputUpdate()
 	{
 		base.InputUpdate();
 		TouchesUpdate ();
@@ -83,12 +85,12 @@ public class InputPlayerTouch : InputBase
         v2Direction.x = Mathf.Cos(deltaAngle);
         v2Direction.y = iAngleDirection * Mathf.Sin(deltaAngle);
         v2Direction *= distance;
-        InternalGestureDetected(v2Direction);
+        //InternalGestureDetected(v2Direction);
 	}
 
 	void OnGestureDone(Vector2 direction)
 	{
-		InternalShootDetected (direction);
+        //InternalShootDetected (direction);
 	}
 
 	const int mk_MAX_TOUCHES = 10;

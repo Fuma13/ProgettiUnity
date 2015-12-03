@@ -42,16 +42,16 @@ public class GravityComponent : MonoBehaviour {
 
 	private void GetInput()
 	{
-		if (m_fJumpIntencity < 1.0f && Input.GetButton ("Jump")) 
+        if (m_fJumpIntencity < 1.0f && Input.GetButton("Jump"))
+        {
+            m_fJumpIntencity += Time.fixedDeltaTime;
+        }
+		if(Input.GetButtonUp("Jump") && m_bGrounded)
 		{
-			m_fJumpIntencity += Time.fixedDeltaTime;
-		}
-		if(Input.GetButtonUp("Jump"))
-		{
-			m_oRigidBodyTarget.AddForce(Vector3.up * m_fJumpIntencity * m_oRigidBodyTarget.mass
-			                            * m_oJumpIntencityCorrectorCurve.Evaluate(m_fJumpIntencity) 
+            m_oRigidBodyTarget.AddForce(Vector3.up * m_fJumpIntencity * m_oRigidBodyTarget.mass
+                                        * m_oJumpIntencityCorrectorCurve.Evaluate(m_fJumpIntencity) 
 			                            * m_fJumpIntencityCorrector, ForceMode.Impulse);
-			m_fJumpIntencity = 0.0f;
+            m_fJumpIntencity = 0.0f;
 		}
 	}
 

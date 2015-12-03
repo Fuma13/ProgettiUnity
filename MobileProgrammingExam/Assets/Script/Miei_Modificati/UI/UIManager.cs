@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
 		m_oGameManager.OnRestartEvent += OnGame;
 		m_oGameManager.OnStartEvent += OnGame;
 		m_oGameManager.OnUnpauseEvent += OnGame;
+        m_oGameManager.OnDeadEvent += OnDead;
 	}
 
 	private void OnDisable()
@@ -19,7 +20,8 @@ public class UIManager : MonoBehaviour
 		m_oGameManager.OnRestartEvent -= OnGame;
 		m_oGameManager.OnStartEvent -= OnGame;
 		m_oGameManager.OnUnpauseEvent -= OnGame;
-	}
+        m_oGameManager.OnDeadEvent -= OnDead;
+    }
 
 	#region MAIN_MENU
 	public void OnStartClick()
@@ -32,7 +34,7 @@ public class UIManager : MonoBehaviour
 		Application.Quit ();
 	}
 	#endregion
-	#region PAUSE_MENU
+	#region PAUSE_MENU DEAD_MENU
 	public void OnContinueClick()
 	{
 		m_oGameManager.ChangeState (GameManager.GameState.GAME);
@@ -48,8 +50,8 @@ public class UIManager : MonoBehaviour
 		m_oGameManager.ChangeState (GameManager.GameState.MAIN);
 	}
 	#endregion
-	#region GAME
-	public void OnPauseClick()
+    #region GAME
+    public void OnPauseClick()
 	{
 		m_oGameManager.ChangeState (GameManager.GameState.PAUSE);
 	}
@@ -60,21 +62,32 @@ public class UIManager : MonoBehaviour
 	{
 		m_oMainMenu.SetActive (false);
 		m_oInGameMenu.SetActive (false);
-		m_oPauseMenu.SetActive (true);
+        m_oDeadMenu.SetActive(false);
+        m_oPauseMenu.SetActive(true);
 	}
 	private void OnMainMenu()
 	{			
 		m_oInGameMenu.SetActive (false);
 		m_oPauseMenu.SetActive (false);
-		m_oMainMenu.SetActive (true);
+        m_oDeadMenu.SetActive(false);
+        m_oMainMenu.SetActive(true);
 	}
 
 	private void OnGame()
 	{
 		m_oMainMenu.SetActive (false);
 		m_oPauseMenu.SetActive (false);
-		m_oInGameMenu.SetActive (true);
+        m_oDeadMenu.SetActive(false);
+        m_oInGameMenu.SetActive(true);
 	}
+
+    private void OnDead()
+    {
+        m_oMainMenu.SetActive(false);
+        m_oPauseMenu.SetActive(false);
+        m_oInGameMenu.SetActive(false);
+        m_oDeadMenu.SetActive(true);
+    }
 	#endregion
 
 
@@ -82,4 +95,5 @@ public class UIManager : MonoBehaviour
 	[SerializeField]private GameObject m_oMainMenu;
 	[SerializeField]private GameObject m_oPauseMenu;
 	[SerializeField]private GameObject m_oInGameMenu;
+    [SerializeField]private GameObject m_oDeadMenu;
 }

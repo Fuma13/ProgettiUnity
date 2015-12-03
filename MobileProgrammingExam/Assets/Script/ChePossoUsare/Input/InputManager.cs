@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using System.Collections;
+using System;
 
 public class InputManager : MonoBehaviour 
 {
-	public delegate void InputEvent();
-	public delegate void DetailedInputEvent(Vector3 position);
-	public delegate void DetailedGestureEvent(Vector2 direction);
-	public event InputEvent OnJump = null;
-	public event InputEvent OnShoot = null;
-	public event DetailedGestureEvent OnGesture = null;
-	public event DetailedInputEvent OnShootDetailed = null;
+    public Action OnJump = null;
+    public Action OnAttack = null;
+    public Action<Vector2> OnSprint = null;
+
+    void Awake()
+    {
+        Assert.IsNotNull<InputFactory>(m_oInputFactory);
+    }
 
 	void Start()
 	{
@@ -29,47 +32,31 @@ public class InputManager : MonoBehaviour
 		}
 	}
 
-	private void ShootDetected(Vector3 position)
+	private void AttackDetected()
 	{
-		if(OnShoot != null)
+        if (OnAttack != null)
 		{
-			OnShoot();
-
-			if(position != default(Vector3) && OnShootDetailed != null)
-			{
-				OnShootDetailed(position);
-			}
-
+            OnAttack();
 		}
 	}
 
-	private void InputForGestureDetected(Vector2 point)
-	{
-		m_oGestureIdentifier.StartOrEndGestureInput (point);
-	}
-
-	private void GestureDetected(Vector2 direction)
-	{
-		if (OnGesture != null)
+    private void JumpAndAttack(Vector2 v2Direction)
+    {
+        if(OnSprint != null)
         {
-			OnGesture(direction);
-		}
-	}
+            OnSprint(v2Direction);
+        }
+    }
 
 	private void InitInput()
 	{
-		m_oInput = InputFactory.GetInput(m_eInputSource);
+		m_oInput = m_oInputFactory.GetInput(m_eInputSource);
 		
 		if(m_oInput != null)
 		{
-			m_oInput.Activate(JumpDetecet, ShootDetected, InputForGestureDetected);
+            m_oInput.Activate(JumpDetecet, AttackDetected, JumpAndAttack);
 			m_oInput.InitInput();
 		}
-
-		if (m_oGestureIdentifier == null) {
-			m_oGestureIdentifier = gameObject.AddComponent<GestureIdentifier>();
-		}
-		m_oGestureIdentifier.Init (m_fGestureTime, GestureDetected);
 	}
 
 	public void ChangeInput(eInputSource eNewInputSource)
@@ -91,17 +78,14 @@ public class InputManager : MonoBehaviour
 	//VARS
 	public enum eInputSource
 	{
-		PLAYER = 0,
+		PLAYER_TOUCH = 0,
 		PLAYER_MOUSE,
-        //AI,
-        //REPLAY,
-        //NETWORK,
+        PLAYER_KEYBORAD,
 		COUNT
 	}
 	
-	[SerializeField] private eInputSource 	m_eInputSource = eInputSource.PLAYER;
-	[SerializeField] private float			m_fGestureTime = 2.0f;
+    [SerializeField] private InputFactory m_oInputFactory;
+	[SerializeField] private eInputSource 	m_eInputSource = eInputSource.PLAYER_KEYBORAD;
 
 	private InputBase m_oInput;
-    private GestureIdentifier m_oGestureIdentifier;
 }

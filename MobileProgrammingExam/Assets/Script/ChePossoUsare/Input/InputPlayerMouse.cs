@@ -3,22 +3,32 @@ using System.Collections;
 
 public class InputPlayerMouse : InputBase 
 {
-	public override void InputUpdate()
-	{
-		base.InputUpdate();
+    protected override void InternalInitInput()
+    {
+    }
+
+    protected override void InternalInputUpdate()
+    {
+        if(Input.GetMouseButton(0))
+        {
+            UpdateGesture(Input.mousePosition, Time.unscaledDeltaTime);
+        }
+        if(Input.GetMouseButtonUp(0))
+        {
+            EndGesture(Input.mousePosition, Time.unscaledDeltaTime);
+        }
+    }
+    //public override void InputUpdate()
+    //{
+    //    base.InputUpdate();
 		
-		if(Input.GetMouseButtonDown(0))
-		{
-			InternalGestureDetected(Input.mousePosition);
+    //    if(Input.GetMouseButtonDown(0))
+    //    {
 
-            //Vector3 mouse = Input.mousePosition;
-            //mouse.z = Camera.main.nearClipPlane;
-            //InternalShootDetected(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-		}
+    //    }
 
-		if (Input.GetMouseButtonUp (0)) 
-		{
-			InternalGestureDetected(Input.mousePosition);
-		}
-	}
+    //    if (Input.GetMouseButtonUp (0)) 
+    //    {
+    //    }
+    //}
 }

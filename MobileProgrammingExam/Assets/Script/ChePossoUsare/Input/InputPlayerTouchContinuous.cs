@@ -3,10 +3,8 @@ using System.Collections;
 
 public class InputPlayerTouchContinuous: InputBase
 {
-	public override void InitInput()
+	protected override void InternalInitInput()
 	{
-		base.InitInput();
-
 		m_aoTouchInfos = new TouchInfo[mk_iMaxTouchNumber];
 
 		InitTouch();
@@ -27,10 +25,8 @@ public class InputPlayerTouchContinuous: InputBase
         //m_oGestureFSM.AddGesture (new Vector3 (-1.0f, 0.0f, 0.0f), 0.15f, 0.5f, 30);
 	}
 
-	public override void InputUpdate()
+	protected override void InternalInputUpdate()
 	{
-		base.InputUpdate();
-
 		int iTouches = 0;
 
 		for(int i = 0; i < Input.touchCount; ++i)
@@ -89,7 +85,7 @@ public class InputPlayerTouchContinuous: InputBase
 		Vector3 vDirection = Vector3.zero;
         GestureFSM.Gesture currentGesture = new GestureFSM.Gesture();//m_oGestureFSM.GetCurrentGesture ();
 
-		m_aoTouchInfos[iID].m_oContInput.GetGestureStatus(out fDistance, out fTime, out vDirection);
+        //m_aoTouchInfos[iID].m_oContInput.GetGestureStatus(out fDistance, out fTime, out vDirection);
 
 		float fSpeed = fDistance / fTime;
 		if(fDistance >= currentGesture.m_fMinDistanceForValidate && fSpeed > currentGesture.m_fMinSpeedForValidate)

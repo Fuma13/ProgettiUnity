@@ -40,11 +40,11 @@ public class GenericObjectPool
 			int avaiable = 0;
 			//Search the first position avaiable
 			for(; avaiable < m_iMaxSize && m_aCratedObjectFlag[avaiable]; ++avaiable){}
-            if (!m_aObjectArray[avaiable].activeInHierarchy)
+            if (!m_aObjectArray[avaiable].activeSelf && !m_aObjectArray[avaiable].activeInHierarchy)
             {
                 m_aCratedObjectFlag[avaiable] = true;
                 //Enable the object
-                m_aObjectArray[avaiable].transform.gameObject.SetActive(true);
+                m_aObjectArray[avaiable].SetActive(true);
                 --m_iNumObjAvaiable;
                 return m_aObjectArray[avaiable];
             }
@@ -83,7 +83,7 @@ public class GenericObjectPool
     {
         m_aCratedObjectFlag[iIndex] = false;
         //Disable the object
-        m_aObjectArray[iIndex].gameObject.SetActive(false);
+        m_aObjectArray[iIndex].SetActive(false);
         ++m_iNumObjAvaiable;
     }
 	

@@ -6,7 +6,7 @@ public class ContinuousInput
 	public ContinuousInput(int iArraySize)
 	{
 		m_afDeltaTime = new float[iArraySize];
-		m_avPositions = new Vector3[iArraySize];
+		m_avPositions = new Vector2[iArraySize];
 
 		Clear();
 	}
@@ -16,21 +16,21 @@ public class ContinuousInput
 		for(int i = 0; i < m_afDeltaTime.Length; ++i)
 		{
 			m_afDeltaTime[i] = 0.0f;
-			m_avPositions[i] = Vector3.zero;
+			m_avPositions[i] = Vector2.zero;
 		}
 
 		m_iNextElement = 0;
 
 		m_fElapsedTime = 0.0f;
-		m_vStartPosition = Vector3.zero;
-		m_vEndPosition = Vector3.zero;
+		m_vStartPosition = Vector2.zero;
+		m_vEndPosition = Vector2.zero;
 	}
 
-	public void AddPosition(Vector3 vPosition, float fDT)
+	public void AddPosition(Vector2 vPosition, float fDT)
 	{
 		m_fElapsedTime -= m_afDeltaTime[m_iNextElement];
 
-		if(m_iNextElement == 0 && m_vStartPosition == Vector3.zero)
+		if(m_iNextElement == 0 && m_vStartPosition == Vector2.zero)
 		{
 			m_vStartPosition = vPosition;
 		}
@@ -43,13 +43,13 @@ public class ContinuousInput
 
 		m_iNextElement = (m_iNextElement + 1) % m_afDeltaTime.Length;
 
-		if(m_avPositions[m_iNextElement] != Vector3.zero)
+		if(m_avPositions[m_iNextElement] != Vector2.zero)
 		{
 			m_vStartPosition = m_avPositions[m_iNextElement];
 		}
 	}
 
-	public void GetGestureStatus(out float fDistance, out float fTime, out Vector3 vDirection)
+	public void GetGestureStatus(out float fDistance, out float fTime, out Vector2 vDirection)
 	{
 		fTime = m_fElapsedTime;
 
@@ -63,8 +63,8 @@ public class ContinuousInput
 	//VARS
 	private float[] 	m_afDeltaTime;
 	private float 		m_fElapsedTime;
-	private Vector3[] 	m_avPositions;
-	private Vector3		m_vStartPosition;
-	private Vector3		m_vEndPosition;
+	private Vector2[] 	m_avPositions;
+	private Vector2		m_vStartPosition;
+	private Vector2		m_vEndPosition;
 	private int 		m_iNextElement;
 }

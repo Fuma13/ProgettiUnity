@@ -56,17 +56,22 @@ public class EnviromentGenerator : MonoBehaviour
 
 	public void ReleaseOnInvisible(GameObject oSection, int iType, int iVariant)
 	{
-		m_aoSectionType [iType].m_aoSectionVariantPool [iVariant].ReleaseObject (oSection);
+        DestroyObstacle[] oDestroyObstacles = oSection.GetComponentsInChildren<DestroyObstacle>();
+        for (int i = 0; i < oDestroyObstacles.Length; ++i )
+        {
+            oDestroyObstacles[i].ResetObstacle();
+        }
+        m_aoSectionType[iType].m_aoSectionVariantPool[iVariant].ReleaseObject(oSection);
 		GenerateSection (1);
 	}
 
 
 	private void SetBegin()
 	{
-		m_iLastSectionType = m_iBeginType;
-		GameObject oBegin = (GameObject)GameObject.Instantiate (m_oBegin, m_tBeginTransform.position, m_tBeginTransform.rotation);
-		oBegin.transform.parent = m_tBeginTransform;
-		m_tLastPrefabTransform = m_tBeginTransform;
+        m_iLastSectionType = m_iBeginType;
+        //GameObject oBegin = (GameObject)GameObject.Instantiate (m_oBegin, m_tBeginTransform.position, m_tBeginTransform.rotation);
+        //oBegin.transform.parent = m_tBeginTransform;
+        m_tLastPrefabTransform = m_tBeginTransform;
 	}
 
 	private void GenerateSection(int iLength)
@@ -91,7 +96,6 @@ public class EnviromentGenerator : MonoBehaviour
 	{
 		int iType = GetNextType (iCurrentType);
 		int iVariant = GetPrefabVariant (iType);
-		Debug.Log ("iType: " + iType + " iVariant: " + iVariant);
 		int iMaxLoop = 3;
 		while (!m_aoSectionType [iType].m_aoSectionVariantPool [iVariant].HasFreeObjects
 		      && iMaxLoop >= 0) 
@@ -211,6 +215,7 @@ public class EnviromentGenerator : MonoBehaviour
 	[SerializeField] private SectionData[] m_aoSectionType;
 	[Serializable] private struct SectionData
 	{
+        [SerializeField] private string m_sDebugName;
 		public int m_iPullSize;
 		public GameObject[] m_aoSectionVariant;
 		public NextTypeData[] m_aiNextTypeSection;

@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 public class RunningGravityComponent : BaseComponent 
 {
-    public void JumpSprint(float fJumpIntencity)
+    public void Jump(float fJumpIntencity)
     {
         m_oRigidBodyTarget.AddForce(m_tTarget.up * m_oRigidBodyTarget.mass
                             * fJumpIntencity, ForceMode.Impulse);
@@ -29,6 +29,7 @@ public class RunningGravityComponent : BaseComponent
         m_oInputManager.OnJump -= OnJump;
     }
 	
+    //Eable the charater to fall down on the plane
 	private void OnStart ()
 	{
 		m_oRigidBodyTarget.isKinematic = false;
@@ -36,10 +37,10 @@ public class RunningGravityComponent : BaseComponent
 
     private void OnJump()
     {
+        //Check if is ground and if it can jump
         if (m_bGround && m_oCharacterFSM.Jump())
         {
-            m_oRigidBodyTarget.AddForce(m_tTarget.up * m_oRigidBodyTarget.mass
-                                * m_fJumpIntencity, ForceMode.Impulse);
+            Jump(m_fJumpIntencity);
         }
     }
 

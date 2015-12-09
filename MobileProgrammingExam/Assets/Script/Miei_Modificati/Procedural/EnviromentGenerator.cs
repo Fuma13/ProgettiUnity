@@ -13,6 +13,7 @@ public class EnviromentGenerator : MonoBehaviour
 		//Create the pool of objects 
 		for (int iType=0; iType<m_aoSectionType.Length; ++iType) 
 		{
+            //Foreach section type a create n variant pools
 			oCurrentSectionVariant = m_aoSectionType[iType];
 			int iVariantLength = oCurrentSectionVariant.m_aoSectionVariant.Length;
 			oCurrentSectionVariant.m_aoSectionVariantPool = new GenericObjectPool[iVariantLength];
@@ -69,8 +70,6 @@ public class EnviromentGenerator : MonoBehaviour
 	private void SetBegin()
 	{
         m_iLastSectionType = m_iBeginType;
-        //GameObject oBegin = (GameObject)GameObject.Instantiate (m_oBegin, m_tBeginTransform.position, m_tBeginTransform.rotation);
-        //oBegin.transform.parent = m_tBeginTransform;
         m_tLastPrefabTransform = m_tBeginTransform;
 	}
 
@@ -208,9 +207,7 @@ public class EnviromentGenerator : MonoBehaviour
 	[SerializeField] private Transform m_tBeginTransform;
 	[SerializeField] private float m_fSectionLength;
 
-	[SerializeField] private GameObject m_oBegin;
 	[SerializeField] private int m_iBeginType;
-	[SerializeField] private GameObject m_oFinish;
 	
 	[SerializeField] private SectionData[] m_aoSectionType;
 	[Serializable] private struct SectionData

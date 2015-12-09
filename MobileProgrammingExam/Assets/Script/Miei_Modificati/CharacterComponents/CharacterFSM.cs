@@ -1,8 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Assertions;
+using System;
 
 public class CharacterFSM : MonoBehaviour 
 {
+    public Action<AnimationState> OnStateExitEvent;
+    protected void Awake()
+    {
+        StateEventDispatcher[] aoStateEventDispatcher = m_oAnimator.GetBehaviours<StateEventDispatcher>();
+
+        Assert.IsNotNull(aoStateEventDispatcher, "No state event dispatcher found on the Animator!");
+
+        for (int i = 0; i < aoStateEventDispatcher.Length; ++i)
+        {
+            aoStateEventDispatcher[i].CharacterFSMController = this;
+        }
+    }
     protected void OnEnable()
     {
         m_oGameManager.OnStartEvent += WalkEvent;
@@ -11,11 +25,6 @@ public class CharacterFSM : MonoBehaviour
         m_oGameManager.OnMainMenuEvent += Reset;
         m_oGameManager.OnPauseEvent += Reset;
         m_oGameManager.OnDeadEvent += Dead;
-
-        for(int i = 0; i < m_aoStateEventDispatcher.Length; ++i)
-        {
-            m_aoStateEventDispatcher[i].OnStateExitEvent += OnStateExit;
-        }
     }
 
     protected void OnDisable()
@@ -26,15 +35,11 @@ public class CharacterFSM : MonoBehaviour
         m_oGameManager.OnMainMenuEvent -= Reset;
         m_oGameManager.OnPauseEvent -= Reset;
         m_oGameManager.OnDeadEvent -= Dead;
-
-        for (int i = 0; i < m_aoStateEventDispatcher.Length; ++i)
-        {
-            m_aoStateEventDispatcher[i].OnStateExitEvent -= OnStateExit;
-        }
     }
 
     public void OnStateExit(AnimationState eAnimationState)
     {
+        Debug.Log("OnStateExit: " + eAnimationState.ToString());
         switch(eAnimationState)
         {
             case AnimationState.JUMP:
@@ -42,8 +47,13 @@ public class CharacterFSM : MonoBehaviour
                 m_eAnimationState = AnimationState.WALK;
                 break;
             case AnimationState.ATTACK_SPRINT:
+            case AnimationState.JUMP_SPRINT:
                 m_eAnimationState = AnimationState.RUN_SPRINT;
                 break;
+        }
+        if(OnStateExitEvent != null)
+        {
+            OnStateExitEvent(eAnimationState);
         }
     }
 
@@ -87,11 +97,11 @@ public class CharacterFSM : MonoBehaviour
         {
             case AnimationState.RUN_SPRINT:
                 SetTrigger(mk_sRunToAttackS);
-                //m_eAnimationState = AnimationState.ATTACK_SPRINT;
+                m_eAnimationState = AnimationState.ATTACK_SPRINT;
                 return true;
             case AnimationState.JUMP_SPRINT:
                 SetTrigger(mk_sJumpSToAttackS);
-                //m_eAnimationState = AnimationState.ATTACK_SPRINT;
+                m_eAnimationState = AnimationState.ATTACK_SPRINT;
                 return true;
         }
         return false;
@@ -102,7 +112,7 @@ public class CharacterFSM : MonoBehaviour
         if (m_eAnimationState == AnimationState.RUN_SPRINT)
         {
             SetTrigger(mk_sRunToJumpS);
-            //m_eAnimationState = AnimationState.JUMP_SPRINT;
+            m_eAnimationState = AnimationState.JUMP_SPRINT;
             return true;
         }
         return false;
@@ -113,7 +123,7 @@ public class CharacterFSM : MonoBehaviour
         if (m_eAnimationState == AnimationState.WALK)
         {
             SetTrigger(mk_sWalkToJump);
-            //m_eAnimationState = AnimationState.JUMP;
+            m_eAnimationState = AnimationState.JUMP;
             return true;
         }
         return false;
@@ -125,11 +135,11 @@ public class CharacterFSM : MonoBehaviour
         {
             case AnimationState.WALK:
                 SetTrigger(mk_sWalkToAttack);
-                //m_eAnimationState = AnimationState.ATTACK;
+                m_eAnimationState = AnimationState.ATTACK;
                 return true;
             case AnimationState.JUMP:
                 SetTrigger(mk_sJumpToAttack);
-                //m_eAnimationState = AnimationState.ATTACK;
+                m_eAnimationState = AnimationState.ATTACK;
                 return true;
         }
 
@@ -164,9 +174,13 @@ public class CharacterFSM : MonoBehaviour
         m_oAnimator.SetFloat(sCommand, fValue);
     }
 
+    public AnimationState CurrentState
+    {
+        get { return m_eAnimationState; }
+    }
+
     [SerializeField] GameManager m_oGameManager;
     [SerializeField] Animator m_oAnimator;
-    [SerializeField] StateEventDispatcher[] m_aoStateEventDispatcher;
 
     private AnimationState m_eAnimationState;
 

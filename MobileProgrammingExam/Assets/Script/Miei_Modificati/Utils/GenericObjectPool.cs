@@ -56,7 +56,7 @@ public class GenericObjectPool
 		return null;
 	}
 	
-	//Set as avaible the obj
+	//Search the object in the pool and release it
 	public void ReleaseObject(GameObject obj)
 	{
 		for (int index = 0; index <  m_iMaxSize; ++index) 
@@ -68,6 +68,7 @@ public class GenericObjectPool
 		}
 	}
 
+    //Realease all objects in the pool
 	public void ReleaseAllObjects()
 	{
 		for (int index = 0; index <  m_iMaxSize; ++index) 
@@ -81,9 +82,11 @@ public class GenericObjectPool
 
     private void ReleaseObjectAtIndex(int iIndex)
     {
+        //Set object flag to not used
         m_aCratedObjectFlag[iIndex] = false;
         //Disable the object
         m_aObjectArray[iIndex].SetActive(false);
+        //Add one to avaiable objects
         ++m_iNumObjAvaiable;
     }
 	

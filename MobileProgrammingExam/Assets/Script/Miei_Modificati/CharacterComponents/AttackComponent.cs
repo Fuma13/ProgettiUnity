@@ -17,18 +17,28 @@ public class AttackComponent : BaseComponent
     {
         //Registration to attack input
         m_oInputManager.OnAttack += OnAttack;
+        m_oCharacterFSM.OnStateExitEvent += OnExitAttack;
     }
 
     private void OnDisable()
     {
         //Deregistration to attack input
         m_oInputManager.OnAttack -= OnAttack;
+        m_oCharacterFSM.OnStateExitEvent -= OnExitAttack;
     }
 
     private void OnAttack()
     {
         //Ask to CharacterFSM if it can attack
         m_bAttacking = m_oCharacterFSM.Attack();
+    }
+
+    private void OnExitAttack(CharacterFSM.AnimationState eAnimationState)
+    {
+        if(eAnimationState == CharacterFSM.AnimationState.ATTACK)
+        {
+            m_bAttacking = false;
+        }
     }
 
     private void FixedUpdate()

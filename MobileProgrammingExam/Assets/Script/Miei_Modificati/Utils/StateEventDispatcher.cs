@@ -17,9 +17,9 @@ public class StateEventDispatcher : StateMachineBehaviour {
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (OnStateExitEvent != null)
+        if (m_oCharacterFSM != null)
         {
-            OnStateExitEvent(m_eAnimationState);
+            m_oCharacterFSM.OnStateExit(m_eAnimationState);
         }
     }
 
@@ -33,8 +33,21 @@ public class StateEventDispatcher : StateMachineBehaviour {
 	//
 	//}
 
-    public Action<CharacterFSM.AnimationState> OnStateExitEvent;
-
     [SerializeField] CharacterFSM.AnimationState m_eAnimationState;
-    //[SerializeField] CharacterFSM m_oCharacterFSM;
+    private CharacterFSM m_oCharacterFSM = null;
+
+    public CharacterFSM CharacterFSMController
+    {
+        set
+        {
+            if (m_oCharacterFSM != value)
+            {
+                m_oCharacterFSM = value;
+            }
+        }
+    }
+    public CharacterFSM.AnimationState AnimationState
+    {
+        get { return m_eAnimationState; }
+    }
 }

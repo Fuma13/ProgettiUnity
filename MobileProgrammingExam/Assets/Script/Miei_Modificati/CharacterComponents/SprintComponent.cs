@@ -33,7 +33,7 @@ public class SprintComponent : BaseComponent
     {
         if (Physics.Raycast(tDirection.position, tDirection.forward, out m_oRaycastHit, m_fRaycastMaxDistanceAttackCheck, m_oLayerMaskAttack))
         {
-            if (m_oCharacterFSM.AttackSprint())
+            if (m_oCharacterFSM.CurrentState == CharacterFSM.AnimationState.ATTACK_SPRINT || m_oCharacterFSM.AttackSprint())
             {
                 m_oAttackComponent.DirectAttack(m_oRaycastHit);
             }
@@ -46,17 +46,21 @@ public class SprintComponent : BaseComponent
         {
             if (m_oGravityComponent.IsGrounded && m_oCharacterFSM.JumpSprint())
             {
-                m_oGravityComponent.JumpSprint(m_fJumpSprintIntesity);
+                m_oGravityComponent.Jump(m_fJumpSprintIntesity);
             }
         }
     }
 
     private void Sprint(Vector2 v2Direction)
     {
-        m_oSprintTimer.StartTimer(m_fSprintTime, EndSprint);
-        m_oMove.Run();
-        m_oCharacterFSM.RunSprint();
-        m_bSprint = true;
+        if (m_bCanSprint)
+        {
+            m_bCanSprint = false;
+            m_oSprintTimer.StartTimer(m_fSprintTime, EndSprint);
+            m_oMove.Run();
+            m_oCharacterFSM.RunSprint();
+            m_bSprint = true;
+        }
     }
 
     private void EndSprint()
@@ -64,6 +68,12 @@ public class SprintComponent : BaseComponent
         m_oMove.Walk();
         m_oCharacterFSM.Walk();
         m_bSprint = false;
+        m_oSprintTimer.StartTimer(m_fRecoverSprintTime, EndRecover, true);
+    }
+    
+    private void EndRecover()
+    {
+        m_bCanSprint = true;
     }
 
     public bool IsSprinting
@@ -99,10 +109,12 @@ public class SprintComponent : BaseComponent
     [SerializeField] private float m_fRaycastMaxDistanceAttackCheck = 1f;
     [SerializeField] private float m_fRaycastMaxDistanceJumpCheck = 1f;
     [SerializeField] private float m_fSprintTime;
+    [SerializeField] private float m_fRecoverSprintTime;
     [SerializeField] private float m_fJumpSprintIntesity;
 
     private Timer m_oSprintTimer;
-    private bool m_bSprint;
+    private bool m_bSprint = false;
+    private bool m_bCanSprint = true;
     private RaycastHit m_oRaycastHit;
     private DestroyObstacle m_oDestoryObstacle;
 }
